@@ -1,17 +1,16 @@
 package com.xiaotian.post;
 
 import com.xiaotian.post.*;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.*;
+import java.io.*;
 
-public class HtmlService
+public class GetService
 {
 
-	public static String getHtml(String path) throws Exception
+	public static String getHtml(String url) throws Exception
 	{
-		URL url = new URL(path);
-		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		URL urls = new URL(url);
+		HttpURLConnection conn = (HttpURLConnection)urls.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setConnectTimeout(3000);
 		int code = conn.getResponseCode();

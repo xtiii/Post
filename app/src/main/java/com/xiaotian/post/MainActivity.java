@@ -48,12 +48,22 @@ public class MainActivity extends Activity
 						Toast.makeText(MainActivity.this, "请输入链接", 0).show();
 						return;
 					}
-					Obtain(url, par);
+					else if (TextUtils.isEmpty(par))
+					{
+						tv1.setText("正在获取请稍候...");
+						getObtain(url);
+					}
+					else
+					{
+						tv1.setText("正在提交请稍候...");
+						postObtain(url, par);
+					}
+
 				}
 			});
     }
 
-	private void Obtain(final String url, final String par)
+	private void getObtain(final String url)
 	{
 		// TODO: Implement this method
 		new Thread(){
@@ -64,7 +74,7 @@ public class MainActivity extends Activity
 				// TODO: Implement this method
 				try
 				{
-					String result = HtmlService.getHtml(url);
+					String result = GetService.getHtml(url);
 					Message msg = new Message();
 					msg.obj = result;
 					handler.sendMessage(msg);
@@ -77,5 +87,30 @@ public class MainActivity extends Activity
 			}
 		}.start();
     }
+
+	private void postObtain(final String url, final String par)
+	{
+		// TODO: Implement this method
+		new Thread(){
+
+			@Override
+			public void run()
+			{
+				// TODO: Implement this method
+				try
+				{
+					String result = PostService.getHtml(url, par);
+					Message msg = new Message();
+					msg.obj = result;
+					handler.sendMessage(msg);
+				}
+				catch (Exception e)
+				{
+					Log.v("MainActivity", e.toString());
+					Toast.makeText(MainActivity.this, "网络连接失败", 0).show();
+				}
+			}
+		}.start();
+	}
 
 }

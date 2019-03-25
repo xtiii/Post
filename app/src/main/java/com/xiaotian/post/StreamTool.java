@@ -1,7 +1,6 @@
 package com.xiaotian.post;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * 从输入流中获取数据
