@@ -8,6 +8,7 @@ import android.util.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
+import org.json.*;
 
 public class MainActivity extends Activity 
 {
@@ -17,7 +18,8 @@ public class MainActivity extends Activity
 		public void handleMessage(android.os.Message msg)
 		{
 			String result = (String) msg.obj;
-			tv1.setText(result);
+			//tv1.setText(result);
+			JsonAnalysis(result);
 		}
 	};
 
@@ -81,7 +83,7 @@ public class MainActivity extends Activity
 				}
 				catch (Exception e)
 				{
-					Log.v("MainActivity", e.toString());
+					Log.v("getObtain", e.toString());
 					Toast.makeText(MainActivity.this, "网络连接失败", 0).show();
 				}
 			}
@@ -106,11 +108,37 @@ public class MainActivity extends Activity
 				}
 				catch (Exception e)
 				{
-					Log.v("MainActivity", e.toString());
+					Log.e("postObtain", e.toString());
 					Toast.makeText(MainActivity.this, "网络连接失败", 0).show();
 				}
 			}
 		}.start();
 	}
 
+	private void JsonAnalysis(String result)
+	{
+		try
+		{
+			tv1.setText(null);
+			JSONObject NetMusic = new JSONObject(result);
+			String ErrCode = NetMusic.getString("ErrCode");
+			if (ErrCode.equals("OK"))
+			{
+				JSONArray array = NetMusic.getJSONArray("Body");
+				for (int i = 0; i < array.length(); i++)
+				{
+					JSONObject item = array.getJSONObject(i);
+					tv1.append(item.getString("title"));
+					tv1.append("\n");
+				}
+				tv1.setText(tv1.getText().toString().trim());
+				return;
+			}
+
+		}
+		catch (Exception e)
+		{
+			Log.e("JsonAnalysis", e.toString());
+		}
+	}
 }
