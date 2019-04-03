@@ -43,8 +43,8 @@ public class MainActivity extends Activity
 				public void onClick(View p1)
 				{
 					// TODO: Implement this method
-					String url=ed1.getText().toString().trim();
-					String par=ed2.getText().toString().trim();
+					String url="https://api.hibai.cn/api/index/index";//ed1.getText().toString().trim();
+					String par="TransCode=020117&OpenId=Test";//ed2.getText().toString().trim();
 					if (TextUtils.isEmpty(url))
 					{
 						Toast.makeText(MainActivity.this, "请输入链接", 0).show();

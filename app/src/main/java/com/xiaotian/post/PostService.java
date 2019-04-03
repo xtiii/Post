@@ -29,6 +29,7 @@ public class PostService
 			byte[] data = StreamTool.readInputStream(inStream);//得到html的二进制数据
 			String html = new String(data, "utf-8");
 			conn.disconnect();//关闭链接
+			inStream.close();
 			return html;
 		}
 		return null;
